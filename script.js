@@ -1,3 +1,4 @@
+let sorting = false;
 
 const Showcards = async () => {
     const api = await fetch('https://openapi.programming-hero.com/api/videos/categories');
@@ -52,23 +53,36 @@ const handleCard = async (categoryId) => {
     const data = await res.json();
     const cards = data.data;
     singleCard(cards);
-    // console.log(cards)
+   if(sorting ){
+    sortBy(cards)
 
+   }
+   document.getElementById('sort-video').addEventListener('click',()=>{
+    sorting = true;
+    sortBy(cards);
+})
 
 };
 
 handleCard(1000);
 
-const sortBy = ()=>{
-   
-    
+
+
+const sortBy = (cards)=>{
+//    console.log(cards)
+cards.sort((a,b)=>{
+    const vA = parseFloat(a.others.views.slice(0, -1));
+    const vB = parseFloat(b.others.views.slice(0, -1));
+    return vB - vA;
+})
+singleCard(cards);
 }
 
 const singleCard = (cards) => {
     const cardContainer = document.getElementById('card-container');
     cardContainer.innerHTML = '';
     cards.forEach(card => {
-        console.log(card.authors[0].profile_picture)
+        // console.log(card.authors[0].profile_picture)
         const singleCard = document.createElement('div');
         singleCard.innerHTML = `
        <div class="card  bg-base-100 shadow-xl">
@@ -100,7 +114,7 @@ const singleCard = (cards) => {
             </div>
         </div>
        `;
-       console.log(card.authors[0].varified)
+    //    console.log(card.authors[0].varified)
         cardContainer.appendChild(singleCard);
     })
 
