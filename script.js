@@ -1,6 +1,4 @@
-let sortby = false;
-let data ;
-console.log(data)
+
 const Showcards = async () => {
     const api = await fetch('https://openapi.programming-hero.com/api/videos/categories');
     const data = await api.json();
@@ -29,7 +27,7 @@ const displayCards = (cards) => {
 };
 
 const categoryChange = (id) => {
-    // console.log(id)
+    console.log(id)
     let categoryId = id;
     handleCard(categoryId);
 
@@ -53,11 +51,8 @@ const handleCard = async (categoryId) => {
     const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${categoryId}`);
     const data = await res.json();
     const cards = data.data;
-    data = cards;
-    console.log(cards)
-    sortBy();
-    
-    console.log(data)
+    singleCard(cards);
+    // console.log(cards)
 
 
 };
@@ -65,8 +60,8 @@ const handleCard = async (categoryId) => {
 handleCard(1000);
 
 const sortBy = ()=>{
-    sortby = true;
-    singleCard(data);
+   
+    
 }
 
 const singleCard = (cards) => {
